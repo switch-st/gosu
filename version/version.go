@@ -39,13 +39,15 @@ var (
 	buildDate string
 )
 
+// Name return SemVer specs version name
 func Name() string {
 	if versionName == "" {
 		return ""
 	}
-	return ver.Must(ver.NewSemver(versionName)).String()
+	return "v" + ver.Must(ver.NewSemver(versionName)).String()
 }
 
+// Code return version code
 func Code() int {
 	if versionCode == "" {
 		return 0
@@ -57,6 +59,7 @@ func Code() int {
 	return code
 }
 
+// BuildDate return build date
 func BuildDate() string {
 	return buildDate
 }
