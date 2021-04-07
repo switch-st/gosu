@@ -8,7 +8,7 @@ linters-settings:
   gocyclo:
     min-complexity: 20
   goimports:
-    local-prefixes: github.com/switch-st/BallroomBooking-core
+    local-prefixes: github.com/switch-st/gosu
   golint:
     min-confidence: 0
   govet:
@@ -48,11 +48,10 @@ linters:
 
 run:
   skip-dirs:
-    - client/
     - test/
 
   skip-files:
-    - "model/[tv]_.*\\.go$"
+    - ".*_test\\.go$"
 
 service:
   golangci-lint-version: 1.23.x
