@@ -15,4 +15,3 @@
 // Original source: github.com/switch-st/gosu/gosu.go
 
 package gosu
-

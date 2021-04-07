@@ -17,6 +17,8 @@
 package version
 
 import (
+	"strconv"
+
 	ver "github.com/hashicorp/go-version"
 )
 
@@ -29,7 +31,7 @@ var (
 	// versionCode set by build flags, like:
 	// go build -ldflags "-X github.com/switch-st/gosu/version.versionCode=$(GOSU_VERSION_CODE)"
 	// GOSU_VERSION_CODE=$(shell git rev-list --all --count)
-	versionCode int
+	versionCode string
 
 	// buildDate set by build flags, like:
 	// go build -ldflags "-X github.com/switch-st/gosu/version.buildDate=$(GOSU_BUILD_DATE)"
@@ -37,19 +39,24 @@ var (
 	buildDate string
 )
 
-func VersionName() string {
+func Name() string {
 	if versionName == "" {
 		return ""
 	}
 	return ver.Must(ver.NewSemver(versionName)).String()
 }
 
-func VersionCode() int {
-	return versionCode
+func Code() int {
+	if versionCode == "" {
+		return 0
+	}
+	code, err := strconv.Atoi(versionCode)
+	if err != nil {
+		panic(err)
+	}
+	return code
 }
 
 func BuildDate() string {
 	return buildDate
 }
-
-// TODO include makefile/ include cmakeList
