@@ -23,7 +23,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-func Test_WithCliVersion(t *testing.T) {
+func TestWithCliVersion(t *testing.T) {
 	versionName = "v1.2.3"
 	versionNameExpect := "version = v1.2.3"
 	versionNameResult := ""
@@ -40,5 +40,11 @@ func Test_WithCliVersion(t *testing.T) {
 
 	if versionNameResult != versionNameExpect {
 		t.Fatalf("%s: expect: %s, actual: %s\n", t.Name(), versionNameExpect, versionNameResult)
+	}
+}
+
+func TestWithCliVersionNil(t *testing.T) {
+	if WithCliVersion(nil) != nil {
+		t.Fatalf("%s: expect: nil, actual: not nil\n", t.Name())
 	}
 }

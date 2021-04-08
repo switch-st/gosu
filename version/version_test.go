@@ -17,6 +17,8 @@
 package version
 
 import (
+	"reflect"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -42,4 +44,34 @@ func TestVersion(t *testing.T) {
 	if BuildDate() != buildDateExpect {
 		t.Fatalf("BuildDate: expect: %s, actual: %s\n", buildDateExpect, BuildDate())
 	}
+}
+
+func TestEmpty(t *testing.T) {
+	versionName = ""
+	versionCode = ""
+	if Name() != "" {
+		t.Fatalf("VersionName: expect: %s, actual: %s\n", "", Name())
+	}
+	if Code() != 0 {
+		t.Fatalf("VersionCode: expect: %d, actual: %d\n", 0, Code())
+	}
+}
+
+func TestCodeNotNumber(t *testing.T) {
+	defer func() {
+		err := recover()
+		if err == nil {
+			t.Fatalf("%s: recover with no error", t.Name())
+		}
+		e, ok := err.(*strconv.NumError)
+		if !ok {
+			t.Fatalf("%s: recover with not strconv.NumError error", t.Name())
+		}
+		if !reflect.DeepEqual(e.Unwrap(), strconv.ErrSyntax) {
+			t.Fatalf("%s: recover with not strconv.ErrSyntax error", t.Name())
+		}
+	}()
+
+	versionCode = "v123"
+	Code()
 }
