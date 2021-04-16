@@ -26,6 +26,6 @@ func WithCliVersion(c *cli.App) *cli.App {
 		return nil
 	}
 	c.HideVersion = false
-	c.Version = Name()
+	c.Version = GetVersionName()
 	return c
 }

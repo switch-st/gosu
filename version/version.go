@@ -33,22 +33,27 @@ var (
 	// GOSU_VERSION_CODE=$(shell git rev-list --all --count)
 	versionCode string
 
+	// commitID set by build flags, like:
+	// go build -ldflags "-X github.com/switch-st/gosu/version.commitID=$(GOSU_COMMIT_ID)"
+	// GOSU_COMMIT_ID=$(shell git describe --always --dirty --abbrev=0)
+	commitID string
+
 	// buildDate set by build flags, like:
 	// go build -ldflags "-X github.com/switch-st/gosu/version.buildDate=$(GOSU_BUILD_DATE)"
 	// GOSU_BUILD_DATE=$(shell date '+%Y-%m-%d %H:%M:%S')
 	buildDate string
 )
 
-// Name return SemVer specs version name
-func Name() string {
+// GetVersionName return SemVer specs version name
+func GetVersionName() string {
 	if versionName == "" {
 		return ""
 	}
 	return "v" + ver.Must(ver.NewSemver(versionName)).String()
 }
 
-// Code return version code
-func Code() int {
+// GetVersionCode return version code
+func GetVersionCode() int {
 	if versionCode == "" {
 		return 0
 	}
@@ -59,7 +64,12 @@ func Code() int {
 	return code
 }
 
-// BuildDate return build date
-func BuildDate() string {
+// GetCommitID return git commit id
+func GetCommitID() string {
+	return commitID
+}
+
+// GetBuildDate return build date
+func GetBuildDate() string {
 	return buildDate
 }

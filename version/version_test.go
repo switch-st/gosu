@@ -32,28 +32,33 @@ func TestVersion(t *testing.T) {
 	versionNameExpect := "v1.2.3"
 	versionCode = "123"
 	versionCodeExpect := 123
+	commitID = "c706382de9de34029d2529415078bc4e7b8c6ca1"
+	commitIDExpect := "c706382de9de34029d2529415078bc4e7b8c6ca1"
 	buildDate = time.Date(2006, 01, 02, 15, 04, 05, 0, time.Local).Format(buildFormat)
 	buildDateExpect := time.Date(2006, 01, 02, 15, 04, 05, 0, time.Local).Format(buildFormat)
 
-	if Name() != versionNameExpect {
-		t.Fatalf("VersionName: expect: %s, actual: %s\n", versionNameExpect, Name())
+	if GetVersionName() != versionNameExpect {
+		t.Fatalf("VersionName: expect: %s, actual: %s\n", versionNameExpect, GetVersionName())
 	}
-	if Code() != versionCodeExpect {
-		t.Fatalf("VersionCode: expect: %d, actual: %d\n", versionCodeExpect, Code())
+	if GetVersionCode() != versionCodeExpect {
+		t.Fatalf("VersionCode: expect: %d, actual: %d\n", versionCodeExpect, GetVersionCode())
 	}
-	if BuildDate() != buildDateExpect {
-		t.Fatalf("BuildDate: expect: %s, actual: %s\n", buildDateExpect, BuildDate())
+	if GetCommitID() != commitIDExpect {
+		t.Fatalf("CommitID: expect: %s, actual: %s\n", commitIDExpect, GetCommitID())
+	}
+	if GetBuildDate() != buildDateExpect {
+		t.Fatalf("GetBuildDate: expect: %s, actual: %s\n", buildDateExpect, GetBuildDate())
 	}
 }
 
 func TestEmpty(t *testing.T) {
 	versionName = ""
 	versionCode = ""
-	if Name() != "" {
-		t.Fatalf("VersionName: expect: %s, actual: %s\n", "", Name())
+	if GetVersionName() != "" {
+		t.Fatalf("VersionName: expect: %s, actual: %s\n", "", GetVersionName())
 	}
-	if Code() != 0 {
-		t.Fatalf("VersionCode: expect: %d, actual: %d\n", 0, Code())
+	if GetVersionCode() != 0 {
+		t.Fatalf("VersionCode: expect: %d, actual: %d\n", 0, GetVersionCode())
 	}
 }
 
@@ -73,5 +78,5 @@ func TestCodeNotNumber(t *testing.T) {
 	}()
 
 	versionCode = "v123"
-	Code()
+	GetVersionCode()
 }
