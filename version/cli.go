@@ -29,3 +29,13 @@ func WithCliVersion(c *cli.App) *cli.App {
 	c.Version = GetVersionName()
 	return c
 }
+
+// WithCliVersion set version name to *cli.App instance
+func (v *Version) WithCliVersion(c *cli.App) *cli.App {
+	if v == nil || c == nil {
+		return c
+	}
+	c.HideVersion = false
+	c.Version = v.GetVersionName()
+	return c
+}

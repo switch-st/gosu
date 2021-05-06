@@ -73,3 +73,60 @@ func GetCommitID() string {
 func GetBuildDate() string {
 	return buildDate
 }
+
+// Version instance
+type Version struct {
+	// VersionName
+	VersionName string
+
+	// VersionCode
+	VersionCode string
+
+	// CommitID
+	CommitID string
+
+	// BuildDate
+	BuildDate string
+}
+
+// GetVersionName return SemVer specs version name
+func (v *Version) GetVersionName() string {
+	if v == nil {
+		return ""
+	}
+	if v.VersionName == "" {
+		return ""
+	}
+	return "v" + ver.Must(ver.NewSemver(v.VersionName)).String()
+}
+
+// GetVersionCode return version code
+func (v *Version) GetVersionCode() int {
+	if v == nil {
+		return 0
+	}
+	if v.VersionCode == "" {
+		return 0
+	}
+	code, err := strconv.Atoi(v.VersionCode)
+	if err != nil {
+		panic(err)
+	}
+	return code
+}
+
+// GetCommitID return git commit id
+func (v *Version) GetCommitID() string {
+	if v == nil {
+		return ""
+	}
+	return v.CommitID
+}
+
+// GetBuildDate return build date
+func (v *Version) GetBuildDate() string {
+	if v == nil {
+		return ""
+	}
+	return v.BuildDate
+}
