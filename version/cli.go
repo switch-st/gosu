@@ -17,8 +17,23 @@
 package version
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/urfave/cli/v2"
 )
+
+var (
+	DefaultPrintFunc = cliVersionPrinter
+)
+
+func cliVersionPrinter(c *cli.Context) {
+	n := len(c.App.Name)
+	head := strings.Repeat(" ", n)
+	_, _ = fmt.Fprintf(c.App.Writer, "%v version %v-r%v\n", c.App.Name, GetVersionName(), GetVersionCode())
+	_, _ = fmt.Fprintf(c.App.Writer, "%v commit with %v\n", head, GetCommitID())
+	_, _ = fmt.Fprintf(c.App.Writer, "%v build on %v\n", head, GetBuildDate())
+}
 
 // WithCliVersion set version name to *cli.App instance
 func WithCliVersion(c *cli.App) *cli.App {
@@ -27,6 +42,7 @@ func WithCliVersion(c *cli.App) *cli.App {
 	}
 	c.HideVersion = false
 	c.Version = GetVersionName()
+	cli.VersionPrinter = DefaultPrintFunc
 	return c
 }
 
